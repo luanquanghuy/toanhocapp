@@ -49,10 +49,10 @@ class TinhDinhThucActivity : AppCompatActivity() {
         btnTinhDinhThuc.setOnClickListener {
             if(row==n) {
                 var a: Double
-                var dt: Double = 1.0
-                var sizeMaTran = n
-                var indicesMatran = maTran.indices
-                var k: Int = 0
+                var dt: Double = 1.0!!
+                var sizeMaTran = n!!
+                var indicesMatran = maTran.indices!!
+                var k: Int = 0!!
                 for (index in 0 until sizeMaTran - 1) {
                     if (maTran[index][index] == 0.0 && k < sizeMaTran) {
                         k = index + 1
