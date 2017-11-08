@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         tinhDinhThuc.setOnClickListener {
             var intent = Intent(this, DinhThucActivity::class.java)
+            finish()
             startActivity(intent)
         }
     }
