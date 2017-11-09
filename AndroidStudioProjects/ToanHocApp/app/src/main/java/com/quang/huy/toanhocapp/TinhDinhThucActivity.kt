@@ -1,6 +1,7 @@
 package com.quang.huy.toanhocapp
 
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_tinh_dinh_thuc.*
 
@@ -133,10 +137,54 @@ class TinhDinhThucActivity : AppCompatActivity() {
             txtHienThiMT.append("\n\n")
             for (i in indicesMatran) {
                 dt *= maTran[i][i]
-                for (j in indicesMatran) if (j < n - 1) txtHienThiMT.append("|\t%.3f".format(maTran[i][j]))
-                else txtHienThiMT.append("|\t%.3f\t||\n".format(maTran[i][j]))
             }
-            txtKetQuaDT.setText("%.4f".format(dt))
+            for(i in 0..n){
+                var tableRow = TableRow(this)
+                tableRow.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT)
+                if(i==0){
+                    val viewTop = View(this)
+                    viewTop.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 1)
+                    viewTop.setBackgroundColor(Color.BLACK)
+                    tableLayout.addView(viewTop)
+                }
+                for(j in 0..n){
+                    if(j==0){
+                        val view = View(this)
+                        view.layoutParams = TableRow.LayoutParams(1, TableLayout.LayoutParams.MATCH_PARENT)
+                        view.setBackgroundColor(Color.BLACK)
+                        tableRow.addView(view)
+                    }
+                    var txtPhanTu : TextView = TextView(this)
+                    txtPhanTu.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                    txtPhanTu.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT)
+                    txtPhanTu.setPadding(4, 1, 4, 1)
+                    if(i==0&&j==0){
+                        txtPhanTu.text = "Row\\Column"
+                        txtPhanTu.setTextColor(Color.BLUE)
+                    }else if (i==0&&j!=0){
+                        txtPhanTu.text = "$j"
+                        txtPhanTu.setTextColor(Color.BLUE)
+                    }else if(i!=0&&j==0){
+                        txtPhanTu.text = "$i"
+                        txtPhanTu.setTextColor(Color.BLUE)
+                    }else {
+                        txtPhanTu.text = maTran[i - 1][j - 1].toString()
+                        txtPhanTu.setTextColor(Color.BLACK)
+                    }
+                    tableRow.addView(txtPhanTu)
+
+                    val viewBottom = View(this)
+                    viewBottom.layoutParams = TableRow.LayoutParams(1, TableLayout.LayoutParams.MATCH_PARENT)
+                    viewBottom.setBackgroundColor(Color.BLACK)
+                    tableRow.addView(viewBottom)
+                }
+                tableLayout.addView(tableRow)
+                val view = View(this)
+                view.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 1)
+                view.setBackgroundColor(Color.BLACK)
+                tableLayout.addView(view)
+            }
+            txtKetQuaDT.setText(dt.toString())
             row++
         }else if(row<n){
             Toast.makeText(this, "Bạn hãy nhập đầy đủ các phần tử", Toast.LENGTH_LONG).show()
